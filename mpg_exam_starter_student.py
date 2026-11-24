@@ -32,7 +32,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, FunctionTransformer
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
+import sklearn.ensemble
 from sklearn.metrics import root_mean_squared_error
 
 RANDOM_STATE = 42
@@ -49,8 +49,9 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 # TODO 1-1: sns.load_dataset("mpg")로 데이터를 불러오고,
 #           결측치 개수, 데이터 타입, 수치형 변수의 기술통계 및 왜도(skew)를 확인하시오.
 mpg = sns.load_dataset("mpg")
-
-
+model=make_pipeline(SimpleImputer(strategy="mean"),StandardScaler())
+model.fit(mpg,mpg)
+print(model.predict(mpg).tolist())
 # TODO 1-2: origin 또는 구간화한 weight를 기준으로 훈련 세트(80%)와 테스트 세트(20%)로
 #           계층적 샘플링(StratifiedShuffleSplit 등)을 수행하시오.
 #           분할 후 원본/훈련/테스트 세트의 계층 비율이 유지되었는지 표(DataFrame)로 출력하시오.
